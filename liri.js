@@ -57,24 +57,24 @@ function concertMe() {
         console.log('\n')
     } else {
         axios.get("https://rest.bandsintown.com/artists/" + finalSearch + "/events?app_id=codingbootcamp").then(
-        function (response) {
-           if(response.data.length <= 0) {
-               console.log("No info for this Artist")
-           }else {
-            for(var i=0; i < response.data.length; i++) {
+            function (response) {
+                if (response.data.length <= 0) {
+                    console.log("No info for this Artist")
+                } else {
+                    for (var i = 0; i < response.data.length; i++) {
 
-                var currData = `\n
+                        var currData = `\n
     Venue: ${response.data[i].venue.name}
     Location: ${response.data[i].venue.city + ", " + response.data[0].venue.region}
     Event Date: ${moment(response.data[i].datetime).format('LL')}
             `
-            console.log(currData)
+                        console.log(currData)
+                    }
+                }
+
+                dataLog(currData)
             }
-           }
-           
-            dataLog(currData)
-        }
-    );
+        );
     }
 }
 
@@ -101,8 +101,8 @@ function spotifyIt() {
     Preview: ${data.tracks.items[0].preview_url}
     Album: ${data.tracks.items[0].album.name}
             `
-            console.log(currData)
-            dataLog(currData)
+        console.log(currData)
+        dataLog(currData)
 
     });
 }
@@ -117,7 +117,7 @@ function movieThis() {
 
     axios.get("http://www.omdbapi.com/?t=" + finalSearch + "&y=&plot=short&apikey=trilogy").then(
         function (response) {
-        
+
             var currData = `\n
     Title: ${response.data.Title}
     Released: ${response.data.Year}
@@ -133,51 +133,51 @@ function movieThis() {
         }
     );
 
-    
+
 }
 
 // node liri.js do-what-it-says
 
 function itSays() {
-    fs.readFile("random.txt", "utf8", function(error, data) {
+    fs.readFile("random.txt", "utf8", function (error, data) {
 
         if (error) {
-          return console.log(error);
+            return console.log(error);
         }
 
         var dataArr = data.split(",");
-      
+
         finalSearch = dataArr[1];
         spotifyIt()
-      });
+    });
 }
 
 //Input Logger - see log.txt
 
-var logQuery = query.splice(0,2)
-logQuery =  "\n" + query.join(" ") + "\n"
+var logQuery = query.splice(0, 2)
+logQuery = "\n" + query.join(" ") + "\n"
 console.log(logQuery)
 
-fs.appendFile("log.txt", logQuery, function(err) {
+fs.appendFile("log.txt", logQuery, function (err) {
 
     if (err) {
-      console.log(err);
+        console.log(err);
     } else {
-      console.log("Log Updated");
+        console.log("Log Updated");
     }
-  
-  });
+
+});
 
 //Data Logger - see log.txt
 
 function dataLog(data) {
-    fs.appendFile("log.txt", data, function(err) {
+    fs.appendFile("log.txt", data, function (err) {
 
         if (err) {
-          console.log(err);
+            console.log(err);
         } else {
-          console.log("Log Updated");
+            console.log("Log Updated");
         }
-      
-      });
-  }
+
+    });
+}
